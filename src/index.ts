@@ -56,6 +56,7 @@ const main = async () => {
             validate: false,
         }),
         context: ({ req, res }) => ({ req, res, redis }),
+        playground: true,
     });
 
     apoloServer.applyMiddleware({ app });
