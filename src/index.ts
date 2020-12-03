@@ -57,6 +57,7 @@ const main = async () => {
         }),
         context: ({ req, res }) => ({ req, res, redis }),
         playground: true,
+        introspection: true,
     });
 
     apoloServer.applyMiddleware({ app });
