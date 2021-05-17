@@ -1,0 +1,30 @@
+version: '3'
+services:
+    redis:
+        image: redis
+        networks:
+            - webnet
+
+    db:
+        image: postgres
+        networks:
+            - webnet
+        environment:
+            POSTGRES_PASSWORD: mysecretpassword
+            POSTGRES_USER: postgres
+            POSTGRES_DB: karobaar
+
+    web:
+        image: huzaifqazi/karobaar-server
+        ports:
+            - '4000:4000'
+        networks:
+            - webnet
+        environment:
+            DB_HOST: db
+            REDIS_HOST: redis
+        depends_on:
+            - db
+
+networks:
+    webnet:
