@@ -13,9 +13,11 @@ services:
             POSTGRES_PASSWORD: mysecretpassword
             POSTGRES_USER: postgres
             POSTGRES_DB: karobaar
+        ports:
+            - '5432:5432'
 
     web:
-        image: huzaifqazi/karobaar-server
+        image: karobaar1.1
         ports:
             - '4000:4000'
         networks:
@@ -23,8 +25,8 @@ services:
         environment:
             DB_HOST: db
             REDIS_HOST: redis
-        depends_on:
-            - db
+            DATABASE_URL: postgres://postgres:mysecretpassword@db:5432/karobaar
+        command: ['node', 'dist/index.js']
 
 networks:
     webnet:
