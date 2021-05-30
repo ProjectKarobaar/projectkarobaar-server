@@ -9,14 +9,15 @@ import redis from 'redis';
 // import connectRedis from 'connect-redis';
 import { UserResolver } from './resolvers/user';
 import { HelloResolver } from './resolvers/hello';
-import { DATABASE_URL, __prod__ } from './constants';
+import { __prod__ } from './constants';
 const main = async () => {
     await createConnection({
         type: 'postgres',
-        database: 'karobaar',
-        url: DATABASE_URL,
+        database: 'postgres',
         logging: true,
         synchronize: true,
+        username: 'postgres',
+        password: 'mysecretpassword',
         entities: [User],
         ssl: __prod__ ? true : false,
         extra: __prod__
