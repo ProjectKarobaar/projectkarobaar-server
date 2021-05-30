@@ -17,7 +17,7 @@ services:
             - '5432:5432'
 
     web:
-        image: karobaar1.1
+        image: karobaar1.1 #build this image if docker hub does not work locally
         ports:
             - '4000:4000'
         networks:
