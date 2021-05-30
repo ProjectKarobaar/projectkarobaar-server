@@ -2,25 +2,31 @@ version: '3'
 services:
     redis:
         image: redis
-        networks: -webnet
+        networks:
+            - webnet
 
     db:
         image: postgres
-        networks: -webnet
+        networks:
+            - webnet
         environment:
-            - POSTGRES_PASSWORD: mysecretpassword
-            - POSTGRES_USER: postgres
-            - POSTGRES_DB: karobaar
-         depends_on:
-            - postgres
+            POSTGRES_PASSWORD: mysecretpassword
+            POSTGRES_USER: postgres
+            POSTGRES_DB: karobaar
+        ports:
+            - '5432:5432'
 
     web:
-        image: huzaifqazi/karobaar-server
-        ports: -"4000:4000"
-        networks: -webnet
+        image: karobaar1.1 #build this image if docker hub does not work locally
+        ports:
+            - '4000:4000'
+        networks:
+            - webnet
         environment:
             DB_HOST: db
             REDIS_HOST: redis
+            DATABASE_URL: postgres://postgres:mysecretpassword@db:5432/karobaar
+        command: ['node', 'dist/index.js']
 
-    networks:
-        webnet:
+networks:
+    webnet:
